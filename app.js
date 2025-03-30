@@ -9,7 +9,10 @@ app.use(cors());
 app.use(express.json());
 
 const linkRoutes = require("./routes/linkRoutes");
+const userRoutes = require("./routes/userRoutes");
+
 app.use("/links", linkRoutes);
+app.use("/users", userRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)
