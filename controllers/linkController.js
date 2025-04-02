@@ -32,29 +32,23 @@ exports.getLinkDetails = async (req, res) => {
     const { linkId } = req.params;
 
     const link = await Link.findOne({ linkId });
-    if (!link) return res.status(404).json({ error: "Link not found" });
+    if (!link) {
+      return res.status(404).json({ error: "Link not found" });
+    }
 
     const users = await User.find({ linkId });
 
-    const expenses = await Expense.find({ linkId })
-      .populate("payer", "name color")
-      .populate("sharedBy", "name");
+    const expenses = users.map((user) => ({
+      ...user.toObject(),
+      personalExpenses: [],
+    }));
 
-    const settlements = await Settlement.find({ linkId })
-      .populate("payer", "name color")
-      .populate("payee", "name color");
-
-    res.json({
-      linkId: link.linkId,
-      createdAt: link.createdAt,
-      expiresAt: link.expiresAt,
-      isSettled: link.isSettled,
-      users,
+    res.status(200).json({
+      ...link.toObject(),
       expenses,
-      settlements,
     });
-  } catch (error) {
-    console.error("Error fetching link details:", error);
+  } catch (err) {
+    console.error("Error fetching link:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
