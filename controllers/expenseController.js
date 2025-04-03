@@ -1,6 +1,19 @@
 const Expense = require("../models/Expense");
 const Link = require("../models/Link");
 
+exports.getExpenses = async (req, res) => {
+  try {
+    const { linkId } = req.params;
+
+    const expenses = await Expense.find({ linkId }).populate("payer sharedBy");
+
+    res.status(200).json(expenses);
+  } catch (error) {
+    console.error("Error fetching expenses:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 exports.createExpense = async (req, res) => {
   try {
     const { linkId } = req.params;
@@ -30,6 +43,23 @@ exports.createExpense = async (req, res) => {
     res.status(201).json(saved);
   } catch (error) {
     console.error("Error creating expense:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteExpense = async (req, res) => {
+  try {
+    const { expenseId } = req.params;
+
+    const deleted = await Expense.findByIdAndDelete(expenseId);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Expense not found" });
+    }
+
+    res.status(200).json({ message: "Expense deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting expense:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
