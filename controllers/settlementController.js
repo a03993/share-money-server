@@ -1,4 +1,3 @@
-const Expense = require("../models/Expense");
 const Settlement = require("../models/Settlement");
 const Link = require("../models/Link");
 

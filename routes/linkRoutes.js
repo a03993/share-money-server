@@ -1,9 +1,9 @@
 // routes/linkRoutes.js
 const express = require("express");
 const router = express.Router();
-const { createLink, getLinkDetails } = require("../controllers/linkController");
+const { createLink, getLink } = require("../controllers/linkController");
 
 router.post("/", createLink);
-router.get("/:linkId", getLinkDetails);
+router.get("/:linkId", getLink);
 
 module.exports = router;

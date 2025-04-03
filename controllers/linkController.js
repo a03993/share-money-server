@@ -1,7 +1,6 @@
 const Link = require("../models/Link");
 const User = require("../models/User");
-const Expense = require("../models/Expense");
-const Settlement = require("../models/Settlement");
+
 const { nanoid } = require("nanoid");
 
 exports.createLink = async (req, res) => {
@@ -27,7 +26,7 @@ exports.createLink = async (req, res) => {
   }
 };
 
-exports.getLinkDetails = async (req, res) => {
+exports.getLink = async (req, res) => {
   try {
     const { linkId } = req.params;
 

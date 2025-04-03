@@ -18,7 +18,7 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-exports.createUser = async (req, res) => {
+exports.createUsers = async (req, res) => {
   try {
     const { linkId } = req.params;
     const { name, color } = req.body;
