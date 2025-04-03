@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const settlementSchema = new mongoose.Schema({
-  payer: {
+  from: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  payee: {
+  to: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,

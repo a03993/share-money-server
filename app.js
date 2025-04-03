@@ -11,11 +11,12 @@ app.use(express.json());
 const linkRoutes = require("./routes/linkRoutes");
 const userRoutes = require("./routes/userRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
-
+const settlementRoutes = require("./routes/settlementRoutes");
 
 app.use("/links", linkRoutes);
 app.use("/users", userRoutes);
 app.use("/expenses", expenseRoutes);
+app.use("/settlements", settlementRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)
