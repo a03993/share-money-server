@@ -5,7 +5,6 @@ This is the backend server for [ShareMoney](https://github.com/a03993/share-mone
 > 💡 Built with **Node.js**, **Express**, and **MongoDB**.  
 > 🔧 This server provides RESTful APIs for managing users, expenses, settlements, and links.
 
-
 ## Table of Contents
 
 - [Features](#features)
@@ -46,9 +45,9 @@ npm install
 # 3. Configure environment variables
 # create a .env file based on .env.example:
 PORT=5001
-MONGODB_URI=mongodb+srv://a03993a:fkf3TsiudexQs7J7@cluster.gaol3ny.mongodb.net/
+MONGODB_URI=mongodb+srv://a03993a:fkf3TsiudexQs7J7@cluster.gaol3ny.mongodb.net/?retryWrites=true&w=majority&appName=Cluster
 # 4. Start the server
-nodemon app.js
+nodemon
 ```
 
 ## API Overview
@@ -74,7 +73,3 @@ You can test APIs using Postman. A frontend client is available here:
 Tina Chiu [@a03993](https://github.com/a03993)
 
 If you have any suggestions, questions, or feedback — feel free to open an issue or contribute!
-
-
-
-
