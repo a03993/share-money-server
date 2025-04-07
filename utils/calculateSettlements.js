@@ -14,7 +14,8 @@ async function calculateAndSaveSettlements(linkId) {
 
   for (const expense of expenses) {
     const { payer, price, sharedBy } = expense;
-    const share = price / sharedBy.length;
+    
+    const share = Math.round(price / sharedBy.length);
 
     paidMap[payer._id] = (paidMap[payer._id] || 0) + price;
 
@@ -41,31 +42,32 @@ async function calculateAndSaveSettlements(linkId) {
   }
 
   const settlements = [];
-  let i = 0,
-    j = 0;
+  let i = 0, j = 0;
 
   while (i < debtors.length && j < creditors.length) {
     const debtor = debtors[i];
     const creditor = creditors[j];
+
     const amount = Math.min(debtor.amount, creditor.amount);
+
+    const roundedAmount = Math.round(amount);
 
     settlements.push({
       from: debtor.userId,
       to: creditor.userId,
-      amount,
+      amount: roundedAmount,
       status: "pending",
       linkId,
     });
 
-    debtor.amount -= amount;
-    creditor.amount -= amount;
+    debtor.amount -= roundedAmount;
+    creditor.amount -= roundedAmount;
 
-    if (debtor.amount === 0) i++;
-    if (creditor.amount === 0) j++;
+    if (debtor.amount <= 0) i++;
+    if (creditor.amount <= 0) j++;
   }
 
   await Settlement.deleteMany({ linkId });
-
   const createdSettlements = await Settlement.insertMany(settlements);
   return createdSettlements;
 }
